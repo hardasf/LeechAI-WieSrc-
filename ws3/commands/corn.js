@@ -1,19 +1,18 @@
 const axios = require('axios');
-const fs = require('fs');
-const path = require('path'); // Import path module
 
 module.exports = {
   name: "corn",
   description: "Search for corn videos.",
-  async run({ api, event, send, args }) {
+  async run({ event, send, args }) {
     try {
       if (args.length === 0) {
         return send('Ano i-se-search ko, lugaw?');
       }
 
-      send(`Searching for: ${args.join(' ')}`);
+      const query = args.join(' ');
+      send(`Searching for: ${query}`);
 
-      const apiUrl = `https://deku-rest-apis.ooguy.com/prn/search/${encodeURIComponent(args.join(' '))}`;
+      const apiUrl = `https://deku-rest-apis.ooguy.com/prn/search/${encodeURIComponent(query)}`;
       const { data: searchResponse } = await axios.get(apiUrl);
 
       const videos = searchResponse.result;
@@ -28,48 +27,17 @@ module.exports = {
       const videoUrl = downloadResponse.result.contentUrl.Default_Quality;
       if (!videoUrl) throw new Error('Error: Link not found!');
 
-      const videoPath = await downloadVideo(videoUrl);
-
-      await api.sendMessage(
-        {
-          body: "Here's the video you requested.",
-          attachment: fs.createReadStream(videoPath),
-        },
-        event.threadID
-      );
-
-      fs.unlink(videoPath, (err) => {
-        if (err) console.error(`Failed to delete video: ${err.message}`);
-        else console.log(`Video deleted: ${videoPath}`);
+      // Send the video directly using the video URL as an attachment
+      await send({
+        body: "Here's the video you requested.",
+        attachment: { type: 'video', payload: { url: videoUrl } }
       });
     } catch (error) {
       console.error(error);
       const errorMsg = error.message.includes('No video') || error.message.includes('Link not found')
         ? error.message
         : 'An error occurred. Please try again.';
-      send(errorMsg, event.threadID);
+      send(errorMsg);
     }
   },
 };
-
-async function downloadVideo(url) {
-  try {
-    const response = await axios({
-      url,
-      method: 'GET',
-      responseType: 'stream',
-    });
-
-    // Use path module to ensure the correct path is resolved
-    const videoPath = path.resolve(__dirname, '../database/video.mp4');
-    const writer = fs.createWriteStream(videoPath);
-
-    return new Promise((resolve, reject) => {
-      response.data.pipe(writer);
-      writer.on('finish', () => resolve(videoPath));
-      writer.on('error', reject);
-    });
-  } catch (error) {
-    throw new Error(`Error downloading video: ${error.message}`);
-  }
-}
