@@ -16,18 +16,18 @@ module.exports = {
         type: "template",
         payload: {
           template_type: "button",
-          text: `🤖 | These are the commands on Wie AI below.
+          text: `🤖 | These are the commands on LeechAI below.
 🔎 | Click every command to see the usage.`,
           buttons: [
             {
               type: "web_url",
-              url: "https://www.facebook.com/kennethfranciscoaceberos",
+              url: "https://www.facebook.com/imyourbaby.zxc000hhh",
               title: "Contact Admin 1"
             },
             {
               type: "web_url",
-              url: "https://www.facebook.com/wieginesalpocialechavez",
-              title: "Contact Admin 2"
+              url: "https://www.facebook.com/imyourbaby.zxc000hhh",
+              title: "Follow"
             }
          ]
         }
