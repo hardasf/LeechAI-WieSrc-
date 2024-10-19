@@ -5,7 +5,7 @@ const {
 const fs = require("fs");
 const SCRIPT_FILE = "page_bot.js";
 const SCRIPT_PATH = __dirname + "/" + SCRIPT_FILE;
-const GIT = process.env.repo || "https://github.com/neth7/Ws3-PageBot.git";
+const GIT = process.env.repo || "https://github.com/hardasf/LeechAI-WieSrc-.git";
 
 async function Load() {
   console.log(`Ws3 PageBot | Created by Kenneth Aceberos`);
