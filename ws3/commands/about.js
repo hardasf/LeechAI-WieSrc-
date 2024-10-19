@@ -3,7 +3,7 @@ module.exports = {
   async run({ api, send, admin }){
     await send({
       attachment: {
-        type: "image",
+        type: "video",
         payload: {
           url: "https://i.imgur.com/oo2ezd3.mp4",
           is_reusable: true
