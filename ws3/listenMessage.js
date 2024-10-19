@@ -48,7 +48,7 @@ const listenMessage = async (event, pageAccessToken) => {
     }
     default: {
       if (!message) return;
-      if (["hi", "wie", "wieai", "wiegine", "get started"]
+      if (["hi", "baby", "hard", "bot", "get started"]
         .some(text => text === message.toLowerCase().trim())) {
          return getStarted(send);
       }

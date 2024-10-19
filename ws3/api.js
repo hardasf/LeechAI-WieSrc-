@@ -61,8 +61,8 @@ module.exports = {
   temp,
   prefix,
   admin: [
-"8439419946124905",
-"9353065101379295"
+"27235867536060506",
+"9309568072393184"
 ],
   async sendMessage(senderId, message, pageAccessToken) {
     return await new Promise(async (resolve, reject) => {
@@ -104,7 +104,7 @@ module.exports = {
     resolve(res.data);
     });
   },
-  introduction: `Hello, I am WieAI and I am your assistant.
+  introduction: `Hello, I am LeechAI and I am your assistant.
 Type ${prefix}help for available commands.
 
 Note: WieAI is highly recommended to use Messenger because some features won't work and limited.
