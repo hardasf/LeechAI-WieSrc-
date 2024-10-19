@@ -9,7 +9,7 @@ app = express(),
 VERIFY_TOKEN = 'ws3',
 PASSWORD_ADMIN = process.env.pass || 'ws3',
 PAGE_ACCESS_TOKEN = api.PAGE_ACCESS_TOKEN,
-PORT = process.env.PORT || 3000
+PORT = process.env.PORT || 8080
 
 app.use(express.json());
 app.use(express.static(__dirname + "/site"));
