@@ -1,5 +1,30 @@
 const axios = require('axios');
 
+const randomQuotes = [
+  "Here’s your video!",
+  "Yey, good one!",
+  "Enjoy this masterpiece!",
+  "Just what you were looking for!",
+  "Fresh from TikTok!",
+  "Caught in 4K!",
+  "Buckle up for this!",
+  "Your video fix, ready!",
+  "Viral vibes incoming!",
+  "Straight to your screen!",
+  "Isn't this awesome?",
+  "Found a gem for you!",
+  "Enjoy, it’s worth the wait!",
+  "This one’s trending!",
+  "Craving TikTok? Here you go!",
+  "The video you never knew you needed!",
+  "Enjoy this dose of fun!",
+  "You're gonna love this!",
+  "Hot off the algorithm!",
+  "Watch it before it’s gone!",
+];
+
+const getRandomQuote = () => randomQuotes[Math.floor(Math.random() * randomQuotes.length)];
+
 module.exports = {
   name: 'shoti',
   description: 'Fetch a TikTok video and send the details along with the video.',
@@ -13,8 +38,8 @@ module.exports = {
 
       if (data.status && data.videoDownloadLink) {
         const { title = 'No Title', videoDownloadLink } = data;
-        
-        const detailsMessage = { text: `Title: ${title}` };
+
+        const detailsMessage = { text: `${getRandomQuote()}\n\n♥️`LeechAI };
         const videoMessage = {
           attachment: {
             type: 'video',
@@ -22,10 +47,7 @@ module.exports = {
           }
         };
 
-        await Promise.all([
-          send(detailsMessage),
-          send(videoMessage)
-        ]);
+        await Promise.all([send(detailsMessage), send(videoMessage)]);
       } else {
         await sendError(send, 'Error: Unable to fetch video details.');
       }
