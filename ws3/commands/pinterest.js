@@ -1,44 +1,46 @@
-const axios = require("axios");
-const name = "pinterest";
+const axios = require('axios');
 
 module.exports = {
-  name,
-  description: "Fetch and send Pinterest images based on your query.",
-  async run({ api, event, send, args }) {
-    const query = args.join(" ");
-    if (!query) 
-      return send(`Please enter a search query!
+  name: "pinterest",
+  description: "Sends Pinterest images based on your search",
 
-Example: ${api.prefix + name} nature`);
-
-    send("Searching for Pinterest images... 🔎");
-
+  async run({ event, send, args }) {
     try {
-      const response = await axios.get(`https://deku-rest-apis.ooguy.com/api/pinterest`, {
-        params: { q: query }
-      });
-
-      const { status, result } = response.data;
-
-      if (status === 200 && result.length > 0) {
-        const imagePromises = result.map(async (url) => {
-          const { data: image } = await axios.get(url, { responseType: "arraybuffer" });
-          const fileName = `/tmp/${url.split('/').pop()}`; // Create a temp filename
-          require("fs").writeFileSync(fileName, Buffer.from(image, "binary")); // Save the image
-          return require("fs").createReadStream(fileName); // Return the file stream
-        });
-
-        const attachments = await Promise.all(imagePromises);
-
-        api.sendMessage(
-          { body: "Here are your Pinterest images:", attachment: attachments },
-          event.threadID
-        );
-      } else {
-        throw new Error("No images found. Please try a different query.");
+      if (args.length === 0) {
+        return await send(`Invalid format! Use the command like this:\n\npinterest [search term] - [number of images]\nExample: pinterest cat - 10`);
       }
-    } catch (err) {
-      send(`Error: ${err.message || err}`);
+
+      const [searchTerm, count] = args.join(" ").split(" - ");
+      if (!searchTerm) {
+        return await send(`Invalid format! Use the command like this:\n\npinterest [search term] - [number of images]\nExample: pinterest cat - 10`);
+      }
+
+      const numOfImages = parseInt(count) || 5;
+
+      const response = await axios.get(`https://api.kenliejugarap.com/pinterestbymarjhun/?search=${encodeURIComponent(searchTerm)}`);
+      
+      if (!response.data.status) {
+        return await send(`No results found for "${searchTerm}".`);
+      }
+
+      const imageUrls = response.data.data.slice(0, numOfImages);
+
+      if (imageUrls.length === 0) {
+        return await send(`No available images for "${searchTerm}".`);
+      }
+
+      for (const url of imageUrls) {
+        await send({
+          attachment: {
+            type: "image",
+            payload: {
+              url: url
+            }
+          }
+        });
+      }
+    } catch (error) {
+      await send(`Failed to retrieve images from Pinterest. Error: ${error.message || error}`);
     }
   }
 };
