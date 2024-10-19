@@ -39,7 +39,7 @@ module.exports = {
       if (data.status && data.videoDownloadLink) {
         const { title = 'No Title', videoDownloadLink } = data;
 
-        const detailsMessage = { text: `${getRandomQuote()}\n\n♥️`LeechAI };
+        const detailsMessage = { text: `${getRandomQuote()}\n\n♥️LeechAI` };
         const videoMessage = {
           attachment: {
             type: 'video',
