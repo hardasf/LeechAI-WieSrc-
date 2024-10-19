@@ -2,15 +2,15 @@ const axios = require('axios');
 
 module.exports = {
   name: "corn",
-  description: "Search for cornvideos.",
+  description: "Search for videos.",
   async run({ api, event, send, args }) {
     try {
       if (args.length === 0) {
         return send('Ano i-se-search ko, lugaw?', event.threadID);
       }
 
-      const { name: senderName } = (await api.getUserInfo(event.senderID))[event.senderID];
-      send(`Manyakis ${senderName} is searching for ${args.join(' ')}`, event.threadID);
+      // Inform the user about the search
+      send(`Naghahanap ka ng ${args.join(' ')}`, event.threadID);
 
       const apiUrl = `https://deku-rest-apis.ooguy.com/prn/search/${encodeURIComponent(args.join(' '))}`;
       const { data: searchResponse } = await axios.get(apiUrl);
