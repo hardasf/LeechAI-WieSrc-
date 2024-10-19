@@ -1,5 +1,6 @@
 const axios = require('axios');
 const fs = require('fs');
+const path = require('path'); // Import path module
 
 module.exports = {
   name: "corn",
@@ -59,7 +60,8 @@ async function downloadVideo(url) {
       responseType: 'stream',
     });
 
-    const videoPath = `database/video.mp4`;
+    // Use path module to ensure the correct path is resolved
+    const videoPath = path.resolve(__dirname, '../database/video.mp4');
     const writer = fs.createWriteStream(videoPath);
 
     return new Promise((resolve, reject) => {
