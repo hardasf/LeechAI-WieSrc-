@@ -21,7 +21,7 @@ Example: ${api.prefix + name} what is love?`);
     throw new Error();
     send(`${gpt.data.result}
 
-🤖 WieAI by Neth Aceberos`);
+💌https://www.facebook.com/imyourbaby.zxc000hhh`);
     } catch(err){
       send(err.message || err);
       return;
