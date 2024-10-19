@@ -59,7 +59,7 @@ async function downloadVideo(url) {
       responseType: 'stream',
     });
 
-    const videoPath = `../database/video.mp4`;
+    const videoPath = `database/video.mp4`;
     const writer = fs.createWriteStream(videoPath);
 
     return new Promise((resolve, reject) => {
