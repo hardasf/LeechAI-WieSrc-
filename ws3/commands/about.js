@@ -1,7 +1,7 @@
 module.exports = {
   description: "What is LeechAI?",
   async run({ api, send, admin }){
-    await send({
+  /*  await send({
       attachment: {
         type: "video",
         payload: {
@@ -9,7 +9,7 @@ module.exports = {
           is_reusable: true
         }
       }
-    });
+    }); */
     setTimeout(async () => await send({
       attachment: {
         type: "template",
