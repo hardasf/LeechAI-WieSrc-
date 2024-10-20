@@ -28,10 +28,17 @@ module.exports = {
       if (!videoUrl) throw new Error('Error: Link not found!');
 
       // Send the video directly using the video URL as an attachment
-      await send({
-        body: "Here's the video you requested.",
+     await send({
         attachment: { type: 'video', payload: { url: videoUrl } }
       });
+      /*
+      const videoMessage = {
+          attachment: {
+            type: 'video',
+            payload: { url: videoDownloadLink }
+          }
+        };
+        */
     } catch (error) {
       console.error(error);
       const errorMsg = error.message.includes('No video') || error.message.includes('Link not found')
