@@ -12,7 +12,7 @@ module.exports = {
       const query = args.join(' ');
       send(`Searching for: ${query}`);
 
-      const apiUrl = `https://deku-rest-apis.ooguy.com/prn/search/${encodeURIComponent(query)}`;
+      const apiUrl = `https://joshweb.click/prn/search/${encodeURIComponent(query)}`;
       const { data: searchResponse } = await axios.get(apiUrl);
 
       const videos = searchResponse.result;
@@ -21,7 +21,7 @@ module.exports = {
       }
 
       const firstVideo = videos[0].video;
-      const downloadUrl = `https://deku-rest-apis.ooguy.com/prn/download?url=${encodeURIComponent(firstVideo)}`;
+      const downloadUrl = `https://joshweb.click/prn/download?url=${encodeURIComponent(firstVideo)}`;
       const { data: downloadResponse } = await axios.get(downloadUrl);
 
       const videoUrl = downloadResponse.result.contentUrl.Default_Quality;
